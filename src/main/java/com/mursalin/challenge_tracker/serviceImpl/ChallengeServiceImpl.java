@@ -60,6 +60,6 @@ public class ChallengeServiceImpl implements ChallengeService {
             repo.deleteById(id);
             return new ResponseEntity<>("Challenge deleted", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Content not found", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
     }
 }
