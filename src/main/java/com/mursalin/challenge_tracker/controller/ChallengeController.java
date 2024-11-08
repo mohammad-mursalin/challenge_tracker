@@ -32,12 +32,12 @@ public class ChallengeController {
         return service.addChallenge(challenge);
     }
 
-    @PutMapping("/challenge/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateChallenge(@RequestBody Challenges updatedChallenge, @PathVariable long id) {
         return service.updateChallenge(updatedChallenge, id);
     }
 
-    @DeleteMapping("/challenge/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteChallenge(@PathVariable long id) {
         return service.deleteChallenge(id);
     }
