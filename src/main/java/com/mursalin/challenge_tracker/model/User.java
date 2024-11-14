@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "challenge_users")
 @Data
 @AllArgsConstructor
 public class User {
@@ -16,9 +16,9 @@ public class User {
     private long id;
 
     @NonNull
-    private String user_mail;
+    private String userMail;
     @NonNull
     private String password;
 
-    private String role = "USER";
+    private String role;
 }

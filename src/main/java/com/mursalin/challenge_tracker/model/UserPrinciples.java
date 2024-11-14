@@ -28,7 +28,7 @@ public class UserPrinciples implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUser_mail();
+        return user.getUserMail();
     }
 
     @Override

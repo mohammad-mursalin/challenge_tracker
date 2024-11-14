@@ -3,6 +3,7 @@ package com.mursalin.challenge_tracker.controller;
 import com.mursalin.challenge_tracker.model.Challenges;
 import com.mursalin.challenge_tracker.service.ChallengeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +38,8 @@ public class ChallengeController {
         return service.updateChallenge(updatedChallenge, id);
     }
 
-    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<String> deleteChallenge(@PathVariable long id) {
         return service.deleteChallenge(id);
     }
