@@ -19,4 +19,6 @@ public class User {
     private String user_mail;
     @NonNull
     private String password;
+
+    private String role = "USER";
 }
