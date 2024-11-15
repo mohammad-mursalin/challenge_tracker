@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<String> register(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole("ADMIN");
+        user.setRole("USER");
         repository.save(user);
         return new ResponseEntity<>("user registration successfull", HttpStatus.CREATED);
     }

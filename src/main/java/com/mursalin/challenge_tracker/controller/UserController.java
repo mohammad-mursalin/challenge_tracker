@@ -5,11 +5,13 @@ import com.mursalin.challenge_tracker.repository.UserRepository;
 import com.mursalin.challenge_tracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+
 public class UserController {
 
     private UserService service;
@@ -23,15 +25,9 @@ public class UserController {
         return service.register(user);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public List<User> userList() {
         return service.getUsers();
-    }
-    @Autowired
-    private UserRepository repo;
-
-    @GetMapping("/user/{email}")
-    public User getUser(@PathVariable String email) {
-        return repo.findByEmail(email).get();
     }
 }

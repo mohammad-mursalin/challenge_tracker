@@ -38,7 +38,6 @@ public class ChallengeController {
         return service.updateChallenge(updatedChallenge, id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<String> deleteChallenge(@PathVariable long id) {
         return service.deleteChallenge(id);
