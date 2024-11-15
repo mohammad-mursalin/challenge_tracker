@@ -20,9 +20,9 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userMail) throws UsernameNotFoundException {
-        System.out.println("load user by user name "+userMail);
-        Optional<User> user = repo.findByUserMail(userMail);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        System.out.println("load user by user name "+email);
+        Optional<User> user = repo.findByEmail(email);
         System.out.println("before if");
         if(user.isPresent()){
             System.out.println(user.get());return new UserPrinciples(user.get());}
