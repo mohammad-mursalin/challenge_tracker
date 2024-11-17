@@ -26,6 +26,7 @@ public class User {
     private String password;
     @NonNull
     private String role;
-    @OneToMany
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Challenges> challenges = new ArrayList<>();
 }
