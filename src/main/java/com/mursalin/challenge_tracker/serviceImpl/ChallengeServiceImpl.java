@@ -24,7 +24,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public ResponseEntity<List<Challenges>> getChallengesByMonth(String month) {
+    public ResponseEntity<List<Challenges>> getChallengesByMonth(String mail, String month) {
         List<Challenges> challenges = repo.findByMonthIgnoreCase(month);
 
         if(challenges.isEmpty())
@@ -34,7 +34,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public ResponseEntity<String> addChallenge(Challenges challenge) {
+    public ResponseEntity<String> addChallenge(String mail, Challenges challenge) {
         Challenges savedChallenge = repo.save(challenge);
 
         return new ResponseEntity<>("challenge saved successfully", HttpStatus.CREATED);
@@ -61,5 +61,10 @@ public class ChallengeServiceImpl implements ChallengeService {
             return new ResponseEntity<>("Challenge deleted", HttpStatus.OK);
         }
         return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<List<Challenges>> getUserChallenges(String mail) {
+        return null;
     }
 }
