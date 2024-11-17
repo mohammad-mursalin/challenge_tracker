@@ -16,5 +16,7 @@ public class Challenges {
     private long id;
     private String month;
     private String challenge;
+    @ManyToOne
+    private User user;
 
 }

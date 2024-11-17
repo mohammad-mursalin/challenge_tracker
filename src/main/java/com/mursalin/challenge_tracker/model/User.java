@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "challenge_users")
 @Data
@@ -21,6 +24,8 @@ public class User {
     private String email;
     @NonNull
     private String password;
-
+    @NonNull
     private String role;
+    @OneToMany
+    private List<Challenges> challenges = new ArrayList<>();
 }
