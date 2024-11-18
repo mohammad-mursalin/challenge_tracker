@@ -47,10 +47,15 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Override
     public ResponseEntity<String> addChallenge(String mail, Challenges challenge) {
-        Challenges savedChallenge = repo.save(challenge);
+        Optional<User> user = userRepo.findByEmail(mail);
 
-        return new ResponseEntity<>("challenge saved successfully", HttpStatus.CREATED);
-
+        if(user.isPresent()) {
+            challenge.setUser(user.get());
+            user.get().getChallenges().add(challenge);
+            repo.save(challenge);
+            return new ResponseEntity<>("challenge saved successfully", HttpStatus.CREATED);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override

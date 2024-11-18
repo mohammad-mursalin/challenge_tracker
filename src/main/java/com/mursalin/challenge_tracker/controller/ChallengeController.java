@@ -45,11 +45,12 @@ public class ChallengeController {
         return service.getChallengesByUserAndMonth(mail, month);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/user")
     public ResponseEntity<String> addChallenge(@RequestBody Challenges challenge,
                                                @AuthenticationPrincipal UserDetails userDetails) {
         String mail = userDetails.getUsername();
-        return service.addChallengeForUser(mail, challenge);
+        return service.addChallenge(mail, challenge);
     }
 
     @PutMapping("/user/{id}")
