@@ -32,8 +32,14 @@ public class ChallengeController {
         return service.getUserChallenges(mail);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/{month}")
+    public ResponseEntity<List<Challenges>> getChallengesByMonth(@PathVariable String month) {
+        return service.getChallengesByMonth(month);
+    }
+
     @GetMapping("/user/{month}")
-    public ResponseEntity<List<Challenges>> getChallengesByMonth(@PathVariable String month,
+    public ResponseEntity<Object> getChallengesByMonth(@PathVariable String month,
                                                                  @AuthenticationPrincipal UserDetails userDetails) {
         String mail = userDetails.getUsername();
         return service.getChallengesByUserAndMonth(mail, month);
