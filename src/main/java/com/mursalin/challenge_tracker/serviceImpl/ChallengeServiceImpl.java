@@ -79,15 +79,16 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Override
     public ResponseEntity<String> deleteChallenge(String mail, long id) {
-        Optional<User> user = userRepo.findByEmail(mail);
-        if(user.isPresent()) {
-            if(repo.existsById(id)){
+        Optional<Long> userId = userRepo.findUserIdByEmail(mail);
+        if(userId.isPresent()) {
+            if(repo.existsByChallengeIdAndUserUserId(id, userId.get())){
                 repo.deleteById(id);
                 return new ResponseEntity<>("Challenge deleted", HttpStatus.OK);
             }
             return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.notFound().build();
+
     }
 
     @Override
