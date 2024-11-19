@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-    private long userId;
-    private String email;
-    private String password;
-    private String role;
+public class ChallengeDTO {
+
+    private long challengeId;
+    private String month;
+    private String challenge;
 }

@@ -1,5 +1,6 @@
 package com.mursalin.challenge_tracker.service;
 
+import com.mursalin.challenge_tracker.DTO.ChallengeDTO;
 import com.mursalin.challenge_tracker.model.Challenges;
 import org.springframework.http.ResponseEntity;
 
@@ -16,7 +17,7 @@ public interface ChallengeService {
 
     ResponseEntity<String> deleteChallenge(String mail, long id);
 
-    ResponseEntity<List<Challenges>> getUserChallenges(String mail);
+    ResponseEntity<List<ChallengeDTO>> getUserChallenges(String mail);
 
-    ResponseEntity<Object> getChallengesByUserAndMonth(String mail, String month);
+    ResponseEntity<List<ChallengeDTO>> getChallengesByUserAndMonth(String mail, String month);
 }

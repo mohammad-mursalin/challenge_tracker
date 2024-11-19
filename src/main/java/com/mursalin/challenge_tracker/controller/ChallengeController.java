@@ -1,5 +1,6 @@
 package com.mursalin.challenge_tracker.controller;
 
+import com.mursalin.challenge_tracker.DTO.ChallengeDTO;
 import com.mursalin.challenge_tracker.model.Challenges;
 import com.mursalin.challenge_tracker.service.ChallengeService;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ChallengeController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<Challenges>> getUserChallenges(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<ChallengeDTO>> getUserChallenges(@AuthenticationPrincipal UserDetails userDetails) {
         String mail = userDetails.getUsername();
         return service.getUserChallenges(mail);
     }
@@ -39,8 +40,8 @@ public class ChallengeController {
     }
 
     @GetMapping("/user/{month}")
-    public ResponseEntity<Object> getChallengesByMonth(@PathVariable String month,
-                                                                 @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<ChallengeDTO>> getChallengesByMonth(@PathVariable String month,
+                                                                   @AuthenticationPrincipal UserDetails userDetails) {
         String mail = userDetails.getUsername();
         return service.getChallengesByUserAndMonth(mail, month);
     }

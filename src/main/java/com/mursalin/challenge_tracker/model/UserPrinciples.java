@@ -1,5 +1,6 @@
 package com.mursalin.challenge_tracker.model;
 
+import com.mursalin.challenge_tracker.DTO.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,9 +10,9 @@ import java.util.Collections;
 
 public class UserPrinciples implements UserDetails {
 
-    private User user;
+    private UserDTO user;
 
-    public UserPrinciples(User user) {
+    public UserPrinciples(UserDTO user) {
         this.user = user;
     }
 

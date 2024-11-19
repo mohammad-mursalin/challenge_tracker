@@ -11,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByEmail(String email);
+    @Query("SELECT new com.mursalin.challenge_tracker.DTO.UserDTO(u.userId, u.email, u.password, u.role) FROM User u WHERE u.email = :email")
+    Optional<UserDTO> findUserDTOByEmail(String email);
+
+    User findByEmail(String email);
 
     @Query("SELECT u.userId FROM User u WHERE u.email = :email")
     Long findUserIdByEmail(String email);

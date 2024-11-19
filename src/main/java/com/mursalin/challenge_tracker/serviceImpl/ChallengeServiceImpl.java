@@ -1,5 +1,7 @@
 package com.mursalin.challenge_tracker.serviceImpl;
 
+import com.mursalin.challenge_tracker.DTO.ChallengeDTO;
+import com.mursalin.challenge_tracker.DTO.UserDTO;
 import com.mursalin.challenge_tracker.model.Challenges;
 import com.mursalin.challenge_tracker.model.User;
 import com.mursalin.challenge_tracker.repository.ChallengeRepo;
@@ -47,15 +49,13 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Override
     public ResponseEntity<String> addChallenge(String mail, Challenges challenge) {
-        Optional<User> user = userRepo.findByEmail(mail);
+        User user = userRepo.findByEmail(mail);
 
-        if(user.isPresent()) {
-            challenge.setUser(user.get());
-            user.get().getChallenges().add(challenge);
-            repo.save(challenge);
-            return new ResponseEntity<>("challenge saved successfully", HttpStatus.CREATED);
-        }
-        return ResponseEntity.notFound().build();
+        challenge.setUser(user);
+        //user.get().getChallenges().add(challenge);
+        repo.save(challenge);
+        return new ResponseEntity<>("challenge saved successfully", HttpStatus.CREATED);
+
     }
 
     @Override
@@ -92,22 +92,21 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public ResponseEntity<List<Challenges>> getUserChallenges(String mail) {
+    public ResponseEntity<List<ChallengeDTO>> getUserChallenges(String mail) {
         long userId = getUserId(mail);
-
-        List<Challenges> challenges = repo.findByUser_UserId(userId);
+        List<ChallengeDTO> challenges = repo.findByUser_UserId(userId);
         return new ResponseEntity<>(challenges, HttpStatus.OK);
 
     }
 
     @Override
-    public ResponseEntity<Object> getChallengesByUserAndMonth(String mail, String month) {
+    public ResponseEntity<List<ChallengeDTO>> getChallengesByUserAndMonth(String mail, String month) {
         long userId = getUserId(mail);
 
-        List<Challenges> challenges = repo.findByUser_UserIdAndMonthIgnoreCase(userId, month);
+        List<ChallengeDTO> challenges = repo.findByUser_UserIdAndMonthIgnoreCase(userId, month);
 
         if(challenges.isEmpty())
-            return new ResponseEntity<>("no challenge found for the given month", HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         return new ResponseEntity<>(challenges, HttpStatus.OK);
     }
 
