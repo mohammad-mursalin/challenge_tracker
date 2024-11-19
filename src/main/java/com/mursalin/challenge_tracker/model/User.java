@@ -29,6 +29,5 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonIgnore
     private List<Challenges> challenges = new ArrayList<>();
 }
