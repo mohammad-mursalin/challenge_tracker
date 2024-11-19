@@ -60,60 +60,58 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Override
     public ResponseEntity<String> updateChallenge(String mail, Challenges updatedChallenge, long id) {
-        Optional<User> user = userRepo.findByEmail(mail);
+        long userId = getUserId(mail);
 
-        if(user.isPresent()) {
+        if (repo.existsByChallengeIdAndUserUserId(id, userId)) {
+
             Challenges challenge = repo.findById(id).orElse(null);
 
-            if(challenge != null) {
-                updatedChallenge.setChallengeId(id);
-                updatedChallenge.setUser(user.get());
-                repo.save(updatedChallenge);
-
+            if (challenge != null) {
+                challenge.setMonth(updatedChallenge.getMonth());
+                challenge.setChallenge(updatedChallenge.getChallenge());
+                repo.save(challenge);
                 return new ResponseEntity<>("Challenge updated", HttpStatus.OK);
             }
-            return new ResponseEntity<>("No content found with given id", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Challenge not found", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.notFound().build();
+        return new ResponseEntity<>("Challenge not found or unauthorized", HttpStatus.NOT_FOUND);
     }
+
 
     @Override
     public ResponseEntity<String> deleteChallenge(String mail, long id) {
-        Optional<Long> userId = userRepo.findUserIdByEmail(mail);
-        if(userId.isPresent()) {
-            if(repo.existsByChallengeIdAndUserUserId(id, userId.get())){
-                repo.deleteById(id);
-                return new ResponseEntity<>("Challenge deleted", HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
+        long userId = getUserId(mail);
+
+        if(repo.existsByChallengeIdAndUserUserId(id, userId)){
+            repo.deleteById(id);
+            return new ResponseEntity<>("Challenge deleted", HttpStatus.OK);
         }
-        return ResponseEntity.notFound().build();
+        return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
+
 
     }
 
     @Override
     public ResponseEntity<List<Challenges>> getUserChallenges(String mail) {
-        Optional<User> user = userRepo.findByEmail(mail);
+        long userId = getUserId(mail);
 
-        if(user.isPresent()) {
-            long userId = user.get().getUserId();
-            List<Challenges> challenges = repo.findByUser_UserId(userId);
-            return new ResponseEntity<>(challenges, HttpStatus.OK);
-        }
-        return ResponseEntity.notFound().build();
+        List<Challenges> challenges = repo.findByUser_UserId(userId);
+        return new ResponseEntity<>(challenges, HttpStatus.OK);
+
     }
 
     @Override
     public ResponseEntity<Object> getChallengesByUserAndMonth(String mail, String month) {
-        Optional<User> user = userRepo.findByEmail(mail);
+        long userId = getUserId(mail);
 
-        if(user.isPresent()) {
-            long userId = user.get().getUserId();
-            List<Challenges> challenges = repo.findByUser_UserIdAndMonthIgnoreCase(userId, month);
-            if(challenges.isEmpty())
-                return new ResponseEntity<>("no challenge found for the given month", HttpStatus.NO_CONTENT);
-            return new ResponseEntity<>(challenges, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("user not exist", HttpStatus.NOT_FOUND);
+        List<Challenges> challenges = repo.findByUser_UserIdAndMonthIgnoreCase(userId, month);
+
+        if(challenges.isEmpty())
+            return new ResponseEntity<>("no challenge found for the given month", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(challenges, HttpStatus.OK);
+    }
+
+    private long getUserId(String mail) {
+        return userRepo.findUserIdByEmail(mail);
     }
 }
