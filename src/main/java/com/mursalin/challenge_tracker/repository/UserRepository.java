@@ -1,5 +1,6 @@
 package com.mursalin.challenge_tracker.repository;
 
+import com.mursalin.challenge_tracker.DTO.UserDTO;
 import com.mursalin.challenge_tracker.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

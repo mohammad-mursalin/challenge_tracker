@@ -12,9 +12,9 @@ public interface ChallengeService {
 
     ResponseEntity<String> addChallenge(String mail, Challenges challenge);
 
-    ResponseEntity<String> updateChallenge(Challenges updateChallenge, long id);
+    ResponseEntity<String> updateChallenge(String mail, Challenges updateChallenge, long id);
 
-    ResponseEntity<String> deleteChallenge(long id);
+    ResponseEntity<String> deleteChallenge(String mail, long id);
 
     ResponseEntity<List<Challenges>> getUserChallenges(String mail);
 

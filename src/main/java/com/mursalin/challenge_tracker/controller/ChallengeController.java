@@ -54,12 +54,14 @@ public class ChallengeController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<String> updateChallenge(@RequestBody Challenges updatedChallenge, @PathVariable long id) {
-        return service.updateChallenge(updatedChallenge, id);
+    public ResponseEntity<String> updateChallenge(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Challenges updatedChallenge, @PathVariable long id) {
+        String mail = userDetails.getUsername();
+        return service.updateChallenge(mail, updatedChallenge, id);
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<String> deleteChallenge(@PathVariable long id) {
-        return service.deleteChallenge(id);
+    public ResponseEntity<String> deleteChallenge(@AuthenticationPrincipal UserDetails userDetails, @PathVariable long id) {
+        String mail = userDetails.getUsername();
+        return service.deleteChallenge(mail, id);
     }
 }

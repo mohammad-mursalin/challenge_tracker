@@ -1,5 +1,6 @@
 package com.mursalin.challenge_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,5 +29,6 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonIgnore
     private List<Challenges> challenges = new ArrayList<>();
 }
