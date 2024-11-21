@@ -15,6 +15,7 @@ public class UserSecretKey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long keyId;
     private String secretKey;
+    private String jwt;
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
