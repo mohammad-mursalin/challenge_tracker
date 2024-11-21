@@ -28,6 +28,9 @@ public class User {
     @NonNull
     private String role;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserSecretKey userSecretKey;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Challenges> challenges = new ArrayList<>();
 }
