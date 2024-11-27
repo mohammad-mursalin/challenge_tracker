@@ -2,6 +2,8 @@ package com.mursalin.challenge_tracker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +23,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
-    @NonNull
+    @Column(nullable = false, unique = true)
+    @NotNull
+    @Email
     private String email;
+
     @NonNull
     private String password;
     @NonNull
